@@ -4,8 +4,6 @@
 
 * Neo4j graph database
 
-* GraphQL
-
 * gRPC
 
 * Sockets

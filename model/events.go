@@ -1,30 +1,6 @@
-# Project omega
-The last event coordinator you will ever need
+package model
 
-<br />
-
-## Main interface
-
-
-* CRUD an event
-
-* Check bookings
-
-* Permission generator
-
-* Auto update website
-
-
-<br />
-
-
-
-#### Event schema
-
-<br />
-
-```go
-{
+type Event struct {
 	ClubName              string      `json:"clubName"`
 	Name                  string      `json:"name"`
 	ToDate                string      `json:"toDate"`
@@ -44,16 +20,7 @@ The last event coordinator you will ever need
 	CampusEngineerRequest string      `json:"campusEngineerRequest"`
 }
 
-```
-
-<br />
-
-#### Guest schema
-
-<br />
-
-```go
-{
+type Guest struct {
 	Name           string `json:"name"`
 	Email          string `json:"email"`
 	PhoneNumber    string `json:"phoneNumber"`
@@ -61,24 +28,3 @@ The last event coordinator you will ever need
 	Stake          string `json:"stake"`
 	LocationOfStay string `json:"locationOfStay"`
 }
-```
-
-
-<br />
-
-#### Participant schema
-
-<br />
-
-```go
-{
-	Name               string `json:"name"`
-	RegistrationNumber string `json:"registrationNumber"`
-	Email              string `json:"email"`
-	PhoneNumber        string `json:"phoneNumber"`
-	Gender             string `json:"gender"`
-	EventsAttended     string `json:"eventsAttended"`
-}
-```
-
-<br />
