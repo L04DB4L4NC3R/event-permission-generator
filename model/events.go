@@ -18,6 +18,7 @@ type Event struct {
 	GuestDetails          Guest       `json:"guest"`
 	PROrequest            string      `json:"PROrequest"`
 	CampusEngineerRequest string      `json:"campusEngineerRequest"`
+	Duration              string      `json:"duration"`
 }
 
 type Guest struct {

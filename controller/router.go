@@ -1,5 +1,5 @@
 package controller
 
 func Startup() {
-	PermissionLetterHandler()
+	permissionLetterHandler()
 }

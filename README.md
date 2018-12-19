@@ -42,6 +42,7 @@ The last event coordinator you will ever need
 	GuestDetails          Guest       `json:"guest"`
 	PROrequest            string      `json:"PROrequest"`
 	CampusEngineerRequest string      `json:"campusEngineerRequest"`
+	Duration              string      `json:"duration"`
 }
 
 ```
