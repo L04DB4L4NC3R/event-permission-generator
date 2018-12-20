@@ -12,7 +12,17 @@
 
 <br />
 
+### Steps to run
 
+<br />
+
+* Download seabolt from [here](https://github.com/neo4j-drivers/seabolt/releases)
+
+* seabolt installation steps [here](https://github.com/neo4j-drivers/seabolt.git)
+
+*  go get github.com/neo4j/neo4j-go-driver/neo4j
+
+* Set up neo4j
 
 #### Event schema
 
