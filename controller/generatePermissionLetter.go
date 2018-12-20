@@ -19,6 +19,18 @@ func Handle(err error) {
 	}
 }
 
+// handleLetter godoc
+// @Summary Generate a permission letter for the event
+// @Description Generate a permission letter for the event
+// @Accept  json
+// @Produce  json
+// @Param id path int true "Account ID"
+// @Param name path string true "Name of the event"
+// @Success 200 {object} model.Event
+// @Failure 400
+// @Failure 404
+// @Failure 500
+// @Router /accounts/{id} [get]
 func (l letter) handleLetter(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		var data model.Event

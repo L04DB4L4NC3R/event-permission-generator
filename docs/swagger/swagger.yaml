@@ -1,0 +1,114 @@
+basePath: /api/v1
+definitions:
+  model.Event:
+    properties:
+      PROrequest:
+        type: string
+      attendance:
+        type: string
+      budget:
+        type: string
+      campusEngineerRequest:
+        type: string
+      category:
+        type: string
+      clubName:
+        type: string
+      description:
+        type: string
+      duration:
+        type: string
+      expectedParticipants:
+        type: string
+      fromDate:
+        type: string
+      fromTime:
+        type: string
+      guest:
+        $ref: '#/definitions/model.Guest'
+        type: object
+      mainSponsor:
+        $ref: '#/definitions/model.Participant'
+        type: object
+      name:
+        type: string
+      sacultyCoordinator:
+        $ref: '#/definitions/model.Participant'
+        type: object
+      studentCoordinator:
+        $ref: '#/definitions/model.Participant'
+        type: object
+      toDate:
+        type: string
+      toTime:
+        type: string
+      venue:
+        type: string
+    type: object
+  model.Guest:
+    properties:
+      email:
+        type: string
+      gender:
+        type: string
+      locationOfStay:
+        type: string
+      name:
+        type: string
+      phoneNumber:
+        type: string
+      stake:
+        type: string
+    type: object
+  model.Participant:
+    properties:
+      email:
+        type: string
+      eventsAttended:
+        type: string
+      gender:
+        type: string
+      name:
+        type: string
+      phoneNumber:
+        type: string
+      registrationNumber:
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: The last event manager you will ever need
+  license: {}
+  title: Project Omega documentation
+  version: "0.1"
+paths:
+  /accounts/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Generate a permission letter for the event
+      parameters:
+      - description: Account ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Name of the event
+        in: path
+        name: name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Event'
+            type: object
+        "400": {}
+        "404": {}
+        "500": {}
+      summary: Generate a permission letter for the event
+swagger: "2.0"
