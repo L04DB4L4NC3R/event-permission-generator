@@ -4,8 +4,10 @@
 
 * Neo4j graph database
 
-* gRPC
+* gRPC for communication between microservices
 
-* Sockets
-
-* Twilio/ sendgrid
+* Sockets for live feed
+ 
+* Twilio/ sendgrid for notification
+ 
+* Apidoc for documentation
