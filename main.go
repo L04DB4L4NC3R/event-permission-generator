@@ -6,7 +6,7 @@ import (
 	"text/template"
 
 	"./controller"
-	_ "github.com/swaggo/http-swagger"
+	"github.com/swaggo/http-swagger"
 )
 
 // @title Project Omega documentation
@@ -17,6 +17,7 @@ import (
 func main() {
 	controller.Startup(populateTempaltes())
 	log.Println("Starting to listen..")
+	http.HandleFunc("/swagger/", httpSwagger.WrapHandler)
 	log.Fatal(http.ListenAndServe(":3000", nil))
 }
 
