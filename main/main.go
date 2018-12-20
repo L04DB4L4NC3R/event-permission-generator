@@ -39,13 +39,13 @@ func populateTempaltes() *template.Template {
 	return res
 }
 
-func connectToDB() (neo4j.Session, neo4j.Driver, *neo4j.Result, error) {
+func connectToDB() (neo4j.Session, neo4j.Driver, neo4j.Result, error) {
 
 	// define driver, session and result vars
 	var (
 		driver  neo4j.Driver
 		session neo4j.Session
-		result  *neo4j.Result
+		result  neo4j.Result
 		err     error
 	)
 
