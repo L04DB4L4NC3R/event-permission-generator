@@ -9,4 +9,5 @@ var (
 func Startup(T *template.Template) {
 	l.temp = T
 	l.permissionLetterHandler()
+	eventCRUDHandler()
 }
