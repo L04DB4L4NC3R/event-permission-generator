@@ -102,7 +102,7 @@ The last event coordinator you will ever need
    "venue":"ANNA AUDI",
    "attendance":"4000",
    "expectedParticipants":"4000",
-   "sacultyCoordinator":{
+   "facultyCoordinator":{
       "name":"NOORU MAA",
       "registrationNumber":"17BBE1010",
       "email":"SDADAS@A.COM",
