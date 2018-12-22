@@ -3,6 +3,8 @@ package model
 import "log"
 
 func CreateEvent(e Event) error {
+	c := make(chan error, 1)
+	go createParticipant(e, "StudentCoordinator", c)
 
 	result, err := session.Run(`CREATE (n:EVENT {name:$name, clubName:$clubName, ToDate:$toDate, 
 		FromDate: $fromDate, ToTime:$toTime, FromTime:$fromTime, Budget:$budget, 
@@ -31,15 +33,40 @@ func CreateEvent(e Event) error {
 		return err
 	}
 
-	// for result.Next() {
-	// 	log.Println(result.Record().GetByIndex(1))
-	// }
 	result.Next()
 	log.Println(result.Record().GetByIndex(0).(string))
 
 	if err = result.Err(); err != nil {
 		return err
 	}
-
+	if err = <-c; err != nil {
+		return err
+	}
 	return nil
+}
+
+// create a new node with given label and participant data struct
+func createParticipant(e Event, label string, c chan error) {
+
+	result, err := session.Run(`CREATE (n:$label {name:$name, registrationNumber:$registrationNumber,
+		email:$email, phoneNumber:$phoneNumber, gender: $gender}) `, map[string]interface{}{
+		"label":              label,
+		"name":               getField(&e, label, "Name"),
+		"registrationNumber": getField(&e, label, "RegistrationNumber"),
+		"email":              getField(&e, label, "Email"),
+		"phoneNumber":        getField(&e, label, "PhoneNumber"),
+		"gender":             getField(&e, label, "Gender"),
+	})
+	if err != nil {
+		c <- err
+	}
+
+	result.Next()
+	log.Println(result.Record().GetByIndex(0))
+
+	if err = result.Err(); err != nil {
+		c <- err
+	}
+	log.Printf("Created %s node", label)
+	c <- nil
 }

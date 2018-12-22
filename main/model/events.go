@@ -1,5 +1,7 @@
 package model
 
+import "reflect"
+
 type Event struct {
 	ClubName              string      `json:"clubName"`
 	Name                  string      `json:"name"`
@@ -29,4 +31,10 @@ type Guest struct {
 	Gender         string `json:"gender"`
 	Stake          string `json:"stake"`
 	LocationOfStay string `json:"locationOfStay"`
+}
+
+func getField(v *Event, field string, value string) string {
+	r := reflect.ValueOf(v)
+	f := reflect.Indirect(r).FieldByName(field)
+	return f.FieldByName(value).String()
 }
