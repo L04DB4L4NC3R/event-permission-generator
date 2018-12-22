@@ -15,7 +15,7 @@ type Event struct {
 	Venue                 string      `json:"venue"`
 	Attendance            string      `json:"attendance"`
 	ExpectedParticipants  string      `json:"expectedParticipants"`
-	FacultyCoordinator    Participant `json:"sacultyCoordinator"`
+	FacultyCoordinator    Participant `json:"facultyCoordinator"`
 	StudentCoordinator    Participant `json:"studentCoordinator"`
 	GuestDetails          Guest       `json:"guest"`
 	PROrequest            string      `json:"PROrequest"`
@@ -33,7 +33,7 @@ type Guest struct {
 	LocationOfStay string `json:"locationOfStay"`
 }
 
-func getField(v *Event, field string, value string) string {
+func (v Event) getField(field string, value string) string {
 	r := reflect.ValueOf(v)
 	f := reflect.Indirect(r).FieldByName(field)
 	return f.FieldByName(value).String()
