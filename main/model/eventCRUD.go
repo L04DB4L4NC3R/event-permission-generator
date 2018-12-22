@@ -3,8 +3,8 @@ package model
 import "log"
 
 func CreateEvent(e Event) error {
-	c := make(chan error, 1)
-	go createParticipant(e, "StudentCoordinator", c)
+	c := make(chan error)
+	//go createParticipant(e, "StudentCoordinator", c)
 
 	result, err := session.Run(`CREATE (n:EVENT {name:$name, clubName:$clubName, ToDate:$toDate, 
 		FromDate: $fromDate, ToTime:$toTime, FromTime:$fromTime, Budget:$budget, 
@@ -39,16 +39,25 @@ func CreateEvent(e Event) error {
 	if err = result.Err(); err != nil {
 		return err
 	}
-	if err = <-c; err != nil {
-		return err
+
+	// CREATE STUDENT COORDINATOR AND FACULTY COORDINATOR NODES
+	go createParticipant(e, "StudentCoordinator", c)
+	go createParticipant(e, "FacultyCoordinator", c)
+	if err1, err2 := <-c, <-c; err1 != nil || err2 != nil {
+		if err1 != nil {
+			return err1
+		} else {
+			return err2
+		}
 	}
+	log.Println("Created Event node")
 	return nil
 }
 
 // create a new node with given label and participant data struct
 func createParticipant(e Event, label string, c chan error) {
 
-	result, err := session.Run(`CREATE (n:$label {name:$name, registrationNumber:$registrationNumber,
+	result, err := session.Run(`CREATE (n:`+label+` {name:$name, registrationNumber:$registrationNumber,
 		email:$email, phoneNumber:$phoneNumber, gender: $gender}) `, map[string]interface{}{
 		"label":              label,
 		"name":               getField(&e, label, "Name"),
@@ -60,7 +69,6 @@ func createParticipant(e Event, label string, c chan error) {
 	if err != nil {
 		c <- err
 	}
-
 	result.Next()
 	log.Println(result.Record().GetByIndex(0))
 
