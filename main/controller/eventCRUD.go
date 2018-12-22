@@ -115,6 +115,20 @@ func createEvent(w http.ResponseWriter, r *http.Request) {
 	}{true, "new node created successfully"})
 }
 
+func readEvent(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+	}
+	var query model.Query
+	if err := json.NewDecoder(r.Body).Decode(&query); err != nil {
+		log.Println(err)
+	}
+
+	model.ShowData(query)
+
+}
+
 func eventCRUDHandler() {
 	http.HandleFunc("/api/v1/event/create", createEvent)
+	http.HandleFunc("/api/v1/event/read", readEvent)
 }
