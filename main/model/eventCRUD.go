@@ -1,6 +1,9 @@
 package model
 
-import "log"
+import (
+	"log"
+	"sync"
+)
 
 func CreateEvent(e Event) error {
 	c := make(chan error)
@@ -41,8 +44,9 @@ func CreateEvent(e Event) error {
 	}
 
 	// CREATE STUDENT COORDINATOR AND FACULTY COORDINATOR NODES
-	go createParticipant(e, "StudentCoordinator", c)
-	go createParticipant(e, "FacultyCoordinator", c)
+	var mutex = &sync.Mutex{}
+	go createParticipant(e, "StudentCoordinator", c, mutex)
+	go createParticipant(e, "FacultyCoordinator", c, mutex)
 	if err1, err2 := <-c, <-c; err1 != nil || err2 != nil {
 		if err1 != nil {
 			return err1
@@ -55,8 +59,8 @@ func CreateEvent(e Event) error {
 }
 
 // create a new node with given label and participant data struct
-func createParticipant(e Event, label string, c chan error) {
-
+func createParticipant(e Event, label string, c chan error, mutex *sync.Mutex) {
+	mutex.Lock()
 	result, err := session.Run(`CREATE (n:`+label+` {name:$name, registrationNumber:$registrationNumber,
 		email:$email, phoneNumber:$phoneNumber, gender: $gender}) `, map[string]interface{}{
 		"label":              label,
@@ -69,8 +73,9 @@ func createParticipant(e Event, label string, c chan error) {
 	if err != nil {
 		c <- err
 	}
-	result.Next()
-	log.Println(result.Record().GetByIndex(0))
+	mutex.Unlock()
+	// result.Next()
+	// log.Println(result.Record().GetByIndex(0))
 
 	if err = result.Err(); err != nil {
 		c <- err
