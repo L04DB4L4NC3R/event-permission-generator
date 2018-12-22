@@ -44,10 +44,10 @@ func CreateEvent(e Event) error {
 
 	// CREATE STUDENT COORDINATOR, FACULTY COORDINATOR, SPONSOR AND GUEST NODES
 	var mutex = &sync.Mutex{}
-	go createParticipant(e, "StudentCoordinator", c, mutex)
-	go createParticipant(e, "FacultyCoordinator", c, mutex)
-	go createParticipant(e, "MainSponsor", c, mutex)
-	go createGuest(e, c, mutex)
+	go CreateParticipant(e, "StudentCoordinator", c, mutex)
+	go CreateParticipant(e, "FacultyCoordinator", c, mutex)
+	go CreateParticipant(e, "MainSponsor", c, mutex)
+	go CreateGuest(e, c, mutex)
 
 	err1, err2, err3, err4 := <-c, <-c, <-c, <-c
 
@@ -67,7 +67,11 @@ func CreateEvent(e Event) error {
 }
 
 // create a new node with given label and participant data struct
-func createParticipant(e Event, label string, c chan error, mutex *sync.Mutex) {
+func CreateParticipant(e Event, label string, c chan error, mutex *sync.Mutex) {
+	if e.getField(label, "Email") == "" {
+		c <- nil
+		return
+	}
 	mutex.Lock()
 	result, err := session.Run(`MATCH(a:EVENT) WHERE a.name=$EventName
 	CREATE (n:INCHARGE {name:$name, registrationNumber:$registrationNumber,
@@ -92,7 +96,11 @@ func createParticipant(e Event, label string, c chan error, mutex *sync.Mutex) {
 }
 
 // create a new guest node with relationship to the event
-func createGuest(e Event, c chan error, mutex *sync.Mutex) {
+func CreateGuest(e Event, c chan error, mutex *sync.Mutex) {
+	if e.GuestDetails.Email == "" {
+		c <- nil
+		return
+	}
 	mutex.Lock()
 	result, err := session.Run(`MATCH(a:EVENT) WHERE a.name=$EventName
 	CREATE (n:GUEST {name:$name, stake:$stake,
