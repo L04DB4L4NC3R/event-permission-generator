@@ -1,8 +1,6 @@
 package model
 
-import (
-	"log"
-)
+import "log"
 
 type Query struct {
 	Key   string `json:"key"`
@@ -22,32 +20,30 @@ func ShowEventData(q Query) error {
 	if err != nil {
 		return err
 	}
-
-	var ev
-
+	var ev Event
 	for result.Next() {
-		ev := Event {
-			ClubName              :      result.Record().GetByIndex()
-			Name                  :      result.Record().GetByIndex()
-			ToDate                :      result.Record().GetByIndex()
-			FromDate              :      result.Record().GetByIndex()
-			ToTime                :      result.Record().GetByIndex()
-			FromTime              :      result.Record().GetByIndex()
-			Budget                :      result.Record().GetByIndex()
-			Description           :      result.Record().GetByIndex()
-			Category              :      result.Record().GetByIndex()
-			Venue                 :      result.Record().GetByIndex()
-			Attendance            :      result.Record().GetByIndex()
-			ExpectedParticipants  :      result.Record().GetByIndex()
-			PROrequest            :      result.Record().GetByIndex()
-			CampusEngineerRequest :      result.Record().GetByIndex()
-			Duration              :      result.Record().GetByIndex()
+		ev = Event{
+			ClubName:              result.Record().GetByIndex(0).(string),
+			Name:                  result.Record().GetByIndex(1).(string),
+			ToDate:                result.Record().GetByIndex(2).(string),
+			FromDate:              result.Record().GetByIndex(3).(string),
+			ToTime:                result.Record().GetByIndex(4).(string),
+			FromTime:              result.Record().GetByIndex(5).(string),
+			Budget:                result.Record().GetByIndex(6).(string),
+			Description:           result.Record().GetByIndex(7).(string),
+			Category:              result.Record().GetByIndex(8).(string),
+			Venue:                 result.Record().GetByIndex(9).(string),
+			Attendance:            result.Record().GetByIndex(10).(string),
+			ExpectedParticipants:  result.Record().GetByIndex(11).(string),
+			PROrequest:            result.Record().GetByIndex(12).(string),
+			CampusEngineerRequest: result.Record().GetByIndex(13).(string),
+			Duration:              result.Record().GetByIndex(14).(string),
 		}
 	}
 
 	if err = result.Err(); err != nil {
 		return err
 	}
-
+	log.Println(ev)
 	return nil
 }
