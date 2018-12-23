@@ -124,7 +124,9 @@ func readEvent(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 
-	model.ShowData(query)
+	if err := model.ShowEventData(query); err != nil {
+		log.Println(err)
+	}
 
 }
 
