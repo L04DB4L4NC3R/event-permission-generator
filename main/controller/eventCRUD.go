@@ -124,9 +124,14 @@ func readEvent(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 
-	if err := model.ShowEventData(query); err != nil {
-		log.Println(err)
+	c := make(chan model.EventReturn)
+	go model.ShowEventData(query, c)
+
+	var ret model.EventReturn = <-c
+	if ret.Err != nil {
+		log.Println(ret.Err)
 	}
+	json.NewEncoder(w).Encode(ret.Event)
 
 }
 

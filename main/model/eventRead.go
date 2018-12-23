@@ -7,7 +7,12 @@ type Query struct {
 	Value string `json:"value"`
 }
 
-func ShowEventData(q Query) error {
+type EventReturn struct {
+	Event Event
+	Err   error
+}
+
+func ShowEventData(q Query, c chan EventReturn) {
 	result, err := session.Run(`
 		MATCH(n:EVENT) 
 		WHERE n.`+q.Key+`=$val
@@ -18,7 +23,7 @@ func ShowEventData(q Query) error {
 	})
 
 	if err != nil {
-		return err
+		c <- EventReturn{Event{}, err}
 	}
 	var ev Event
 	for result.Next() {
@@ -42,8 +47,8 @@ func ShowEventData(q Query) error {
 	}
 
 	if err = result.Err(); err != nil {
-		return err
+		c <- EventReturn{ev, err}
 	}
 	log.Println(ev)
-	return nil
+	c <- EventReturn{ev, nil}
 }
