@@ -7,8 +7,10 @@ import (
 )
 
 type Query struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
+	Key         string `json:"key"`
+	Value       string `json:"value"`
+	ChangeKey   string `json:"changeKey"`
+	ChangeValue string `json:"changeValue"`
 }
 
 type EventReturn struct {
@@ -32,6 +34,7 @@ func ShowEventData(q Query, c chan EventReturn) {
 
 	if err != nil {
 		c <- EventReturn{events.Event{}, err}
+		return
 	}
 	var ev events.Event
 	for result.Next() {
@@ -79,6 +82,8 @@ func ShowEventData(q Query, c chan EventReturn) {
 
 	if err = result.Err(); err != nil {
 		c <- EventReturn{ev, err}
+		return
 	}
 	c <- EventReturn{ev, nil}
+	return
 }

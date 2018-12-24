@@ -102,7 +102,11 @@ func createEvent(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-	if err = model.CreateEvent(data); err != nil {
+
+	ce := make(chan error)
+	go model.CreateEvent(data, ce)
+
+	if err = <-ce; err != nil {
 		log.Println(err)
 		json.NewEncoder(w).Encode(struct {
 			Status  bool   `json:"status"`
@@ -236,12 +240,12 @@ func deleteEvent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var data model.Query
-	c := make(chan error)
 	err := json.NewDecoder(r.Body).Decode(&data)
 	if err != nil {
 		log.Println(err)
 	}
 
+	c := make(chan error)
 	go model.DeleteEvent(data, c)
 
 	if err = <-c; err != nil {
@@ -259,8 +263,61 @@ func deleteEvent(w http.ResponseWriter, r *http.Request) {
 	}{true, "node DELETED successfully"})
 }
 
+/**
+ * @api {put} /event/update update an event
+ * @apiName update an event
+ * @apiGroup admin
+ *
+ * @apiParam {String} key key to query the event by
+ * @apiParam {String} value value of the key
+
+@apiParamExample {json} request-example
+{
+	"key":"name",
+	"value":"DEVRELCONF"
+}
+
+ * @apiParamExample {json} response-example
+ *
+ * {"status":true,"message":"Updated name to DEVRELCONF"}
+
+ *
+*/
+func updateEvent(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPut {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
+
+	var data model.Query
+	err := json.NewDecoder(r.Body).Decode(&data)
+	if err != nil {
+		log.Println(err)
+	}
+
+	c := make(chan error)
+	go model.UpdateEvent(data, c)
+
+	if err = <-c; err != nil {
+
+		log.Println(err)
+		json.NewEncoder(w).Encode(struct {
+			Status  bool   `json:"status"`
+			Message string `json:"message"`
+		}{false, "some error occurreed"})
+		return
+	}
+	log.Println("hagga")
+
+	json.NewEncoder(w).Encode(struct {
+		Status  bool   `json:"status"`
+		Message string `json:"message"`
+	}{true, "node updated successfully"})
+}
+
 func eventCRUDHandler() {
 	http.HandleFunc("/api/v1/event/create", createEvent)
 	http.HandleFunc("/api/v1/event/read", readEvent)
 	http.HandleFunc("/api/v1/event/delete", deleteEvent)
+	http.HandleFunc("/api/v1/event/update", updateEvent)
 }

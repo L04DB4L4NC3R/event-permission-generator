@@ -24,14 +24,17 @@ func CreateParticipant(e Event, label string, c chan error, mutex *sync.Mutex) {
 	})
 	if err != nil {
 		c <- err
+		return
 	}
 	mutex.Unlock()
 
 	if err = result.Err(); err != nil {
 		c <- err
+		return
 	}
 	log.Printf("Created %s node", label)
 	c <- nil
+	return
 }
 
 // create a new guest node with relationship to the event
@@ -55,12 +58,15 @@ func CreateGuest(e Event, c chan error, mutex *sync.Mutex) {
 	})
 	if err != nil {
 		c <- err
+		return
 	}
 	mutex.Unlock()
 
 	if err = result.Err(); err != nil {
 		c <- err
+		return
 	}
 	log.Println("Created GUEST node")
 	c <- nil
+	return
 }

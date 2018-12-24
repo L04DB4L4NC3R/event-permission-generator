@@ -7,7 +7,7 @@ import (
 	events "../../../lib"
 )
 
-func CreateEvent(e events.Event) error {
+func CreateEvent(e events.Event, ce chan error) {
 	c := make(chan error)
 	//go createParticipant(e, "StudentCoordinator", c)
 	result, err := events.Session.Run(`CREATE (n:EVENT {name:$name, clubName:$clubName, toDate:$toDate, 
@@ -34,14 +34,16 @@ func CreateEvent(e events.Event) error {
 		"expectedParticipants":  e.ExpectedParticipants,
 	})
 	if err != nil {
-		return err
+		ce <- err
+		return
 	}
 
 	result.Next()
 	log.Println(result.Record().GetByIndex(0).(string))
 
 	if err = result.Err(); err != nil {
-		return err
+		ce <- err
+		return
 	}
 
 	// CREATE STUDENT COORDINATOR, FACULTY COORDINATOR, SPONSOR AND GUEST NODES
@@ -55,15 +57,20 @@ func CreateEvent(e events.Event) error {
 
 	switch {
 	case err1 != nil:
-		return err1
+		ce <- err1
+		return
 	case err2 != nil:
-		return err2
+		ce <- err2
+		return
 	case err3 != nil:
-		return err3
+		ce <- err3
+		return
 	case err4 != nil:
-		return err4
+		ce <- err4
+		return
 	}
 
 	log.Println("Created Event node")
-	return nil
+	ce <- nil
+	return
 }
