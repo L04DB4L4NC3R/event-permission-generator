@@ -48,14 +48,12 @@ func UpdateEvent(q Query, c chan error) {
 		return
 	}
 	c <- nil
-	result.Next()
-	log.Println(result.Record())
-	return
-	// result.Next()
-	// log.Printf("Updated %s to %s", q.Key, result.Record().GetByIndex(0).(string))
 
-	// if err = result.Err(); err != nil {
-	// 	c <- err
-	// 	return
-	// }
+	result.Next()
+	log.Printf("Updated %s to %s", q.Key, result.Record().GetByIndex(0).(string))
+
+	if err = result.Err(); err != nil {
+		c <- err
+		return
+	}
 }

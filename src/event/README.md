@@ -7,7 +7,5 @@
 
 * Permission generator
 
-* Auto update website
-
 
 <br />
