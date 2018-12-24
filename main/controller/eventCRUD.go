@@ -115,6 +115,73 @@ func createEvent(w http.ResponseWriter, r *http.Request) {
 	}{true, "new node created successfully"})
 }
 
+/**
+ * @api {post} /event/read read an event
+ * @apiName read an event
+ * @apiGroup admin
+ *
+ * @apiParam {String} key key to query the event by
+ * @apiParam {String} value value of the key
+
+@apiParamExample {json} request-example
+{
+	"key":"name",
+	"value":"DEVFEST"
+}
+
+ * @apiParamExample {json} response-example
+ *
+ * {
+    "clubName": "GDG",
+    "name": "DEVFEST",
+    "toDate": "10TH OCTOBER",
+    "fromDate": "8TH OCTOBER",
+    "toTime": "10 PM",
+    "fromTime": "11 AM",
+    "budget": "200000",
+    "description": "TECHNICAL EVENT AT GDG VIT. ITS GONNA BE AMAZING",
+    "category": "TECHNICAL",
+    "venue": "ANNA AUDI",
+    "attendance": "4000",
+    "expectedParticipants": "4000",
+    "facultyCoordinator": {
+        "name": "NOORU MAA",
+        "registrationNumber": "17BBE1010",
+        "email": "SDADAS@A.COM",
+        "phoneNumber": "919191991911",
+        "gender": "M",
+        "eventsAttended": ""
+    },
+    "studentCoordinator": {
+        "name": "NOORU BAAP",
+        "registrationNumber": "17BBE1010",
+        "email": "SDADAS@A.COM",
+        "phoneNumber": "919191991911",
+        "gender": "M",
+        "eventsAttended": ""
+    },
+    "guest": {
+        "name": "ALLAHH DAAS",
+        "email": "ASDSAD#ASD.COM",
+        "phoneNumber": "11111111111",
+        "gender": "F",
+        "stake": "SOME MONAYYYY",
+        "locationOfStay": "TERA GHAR"
+    },
+    "PROrequest": "SAJDOOSIJANDFSAKFDSAFD",
+    "campusEngineerRequest": "SDFHBSADUB, ASNFD , AS KDFSAM FDSA, AS, SD",
+    "duration": "16 hours",
+    "mainSponsor": {
+        "name": "",
+        "registrationNumber": "",
+        "email": "",
+        "phoneNumber": "",
+        "gender": "",
+        "eventsAttended": ""
+    }
+}
+ *
+*/
 func readEvent(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)

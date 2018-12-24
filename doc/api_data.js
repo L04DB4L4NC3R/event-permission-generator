@@ -208,6 +208,53 @@ define({ "api": [
   },
   {
     "type": "post",
+    "url": "/event/read",
+    "title": "read an event",
+    "name": "read_an_event",
+    "group": "admin",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "key",
+            "description": "<p>key to query the event by</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "value",
+            "description": "<p>value of the key</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "request-example",
+          "content": "{\n\t\"key\":\"name\",\n\t\"value\":\"DEVFEST\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "response-example",
+          "content": "\n{\n    \"clubName\": \"GDG\",\n    \"name\": \"DEVFEST\",\n    \"toDate\": \"10TH OCTOBER\",\n    \"fromDate\": \"8TH OCTOBER\",\n    \"toTime\": \"10 PM\",\n    \"fromTime\": \"11 AM\",\n    \"budget\": \"200000\",\n    \"description\": \"TECHNICAL EVENT AT GDG VIT. ITS GONNA BE AMAZING\",\n    \"category\": \"TECHNICAL\",\n    \"venue\": \"ANNA AUDI\",\n    \"attendance\": \"4000\",\n    \"expectedParticipants\": \"4000\",\n    \"facultyCoordinator\": {\n        \"name\": \"NOORU MAA\",\n        \"registrationNumber\": \"17BBE1010\",\n        \"email\": \"SDADAS@A.COM\",\n        \"phoneNumber\": \"919191991911\",\n        \"gender\": \"M\",\n        \"eventsAttended\": \"\"\n    },\n    \"studentCoordinator\": {\n        \"name\": \"NOORU BAAP\",\n        \"registrationNumber\": \"17BBE1010\",\n        \"email\": \"SDADAS@A.COM\",\n        \"phoneNumber\": \"919191991911\",\n        \"gender\": \"M\",\n        \"eventsAttended\": \"\"\n    },\n    \"guest\": {\n        \"name\": \"ALLAHH DAAS\",\n        \"email\": \"ASDSAD#ASD.COM\",\n        \"phoneNumber\": \"11111111111\",\n        \"gender\": \"F\",\n        \"stake\": \"SOME MONAYYYY\",\n        \"locationOfStay\": \"TERA GHAR\"\n    },\n    \"PROrequest\": \"SAJDOOSIJANDFSAKFDSAFD\",\n    \"campusEngineerRequest\": \"SDFHBSADUB, ASNFD , AS KDFSAM FDSA, AS, SD\",\n    \"duration\": \"16 hours\",\n    \"mainSponsor\": {\n        \"name\": \"\",\n        \"registrationNumber\": \"\",\n        \"email\": \"\",\n        \"phoneNumber\": \"\",\n        \"gender\": \"\",\n        \"eventsAttended\": \"\"\n    }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./main/controller/eventCRUD.go",
+    "groupTitle": "admin",
+    "sampleRequest": [
+      {
+        "url": "http://localhost/api/v1/event/read"
+      }
+    ]
+  },
+  {
+    "type": "post",
     "url": "/permissionLetter",
     "title": "generate permission letter",
     "name": "permissionLetter",

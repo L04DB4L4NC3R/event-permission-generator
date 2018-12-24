@@ -3,12 +3,14 @@ package model
 import (
 	"log"
 	"sync"
+
+	events "../../lib"
 )
 
-func CreateEvent(e Event) error {
+func CreateEvent(e events.Event) error {
 	c := make(chan error)
 	//go createParticipant(e, "StudentCoordinator", c)
-	result, err := session.Run(`CREATE (n:EVENT {name:$name, clubName:$clubName, toDate:$toDate, 
+	result, err := events.Session.Run(`CREATE (n:EVENT {name:$name, clubName:$clubName, toDate:$toDate, 
 		fromDate: $fromDate, toTime:$toTime, fromTime:$fromTime, budget:$budget, 
 		description:$description, category:$category, venue:$venue, attendance:$attendance, 
 		expectedParticipants:$expectedParticipants, PROrequest:$PROrequest, 
@@ -44,10 +46,10 @@ func CreateEvent(e Event) error {
 
 	// CREATE STUDENT COORDINATOR, FACULTY COORDINATOR, SPONSOR AND GUEST NODES
 	var mutex = &sync.Mutex{}
-	go CreateParticipant(e, "StudentCoordinator", c, mutex)
-	go CreateParticipant(e, "FacultyCoordinator", c, mutex)
-	go CreateParticipant(e, "MainSponsor", c, mutex)
-	go CreateGuest(e, c, mutex)
+	go events.CreateParticipant(e, "StudentCoordinator", c, mutex)
+	go events.CreateParticipant(e, "FacultyCoordinator", c, mutex)
+	go events.CreateParticipant(e, "MainSponsor", c, mutex)
+	go events.CreateGuest(e, c, mutex)
 
 	err1, err2, err3, err4 := <-c, <-c, <-c, <-c
 
@@ -64,64 +66,4 @@ func CreateEvent(e Event) error {
 
 	log.Println("Created Event node")
 	return nil
-}
-
-// create a new node with given label and participant data struct
-func CreateParticipant(e Event, label string, c chan error, mutex *sync.Mutex) {
-	if e.getField(label, "Email") == "" {
-		c <- nil
-		return
-	}
-	mutex.Lock()
-	result, err := session.Run(`MATCH(a:EVENT) WHERE a.name=$EventName
-	CREATE (n:INCHARGE {name:$name, registrationNumber:$registrationNumber,
-		email:$email, phoneNumber:$phoneNumber, gender: $gender})<-[:`+label+`]-(a) `, map[string]interface{}{
-		"EventName":          e.Name,
-		"name":               e.getField(label, "Name"),
-		"registrationNumber": e.getField(label, "RegistrationNumber"),
-		"email":              e.getField(label, "Email"),
-		"phoneNumber":        e.getField(label, "PhoneNumber"),
-		"gender":             e.getField(label, "Gender"),
-	})
-	if err != nil {
-		c <- err
-	}
-	mutex.Unlock()
-
-	if err = result.Err(); err != nil {
-		c <- err
-	}
-	log.Printf("Created %s node", label)
-	c <- nil
-}
-
-// create a new guest node with relationship to the event
-func CreateGuest(e Event, c chan error, mutex *sync.Mutex) {
-	if e.GuestDetails.Email == "" {
-		c <- nil
-		return
-	}
-	mutex.Lock()
-	result, err := session.Run(`MATCH(a:EVENT) WHERE a.name=$EventName
-	CREATE (n:GUEST {name:$name, stake:$stake,
-	email:$email, phoneNumber:$phoneNumber, gender: $gender, locationOfStay:$locationOfStay
-	})<-[:GUEST]-(a) `, map[string]interface{}{
-		"EventName":      e.Name,
-		"name":           e.getField("GuestDetails", "Name"),
-		"stake":          e.getField("GuestDetails", "Stake"),
-		"email":          e.getField("GuestDetails", "Email"),
-		"phoneNumber":    e.getField("GuestDetails", "PhoneNumber"),
-		"gender":         e.getField("GuestDetails", "Gender"),
-		"locationOfStay": e.getField("GuestDetails", "LocationOfStay"),
-	})
-	if err != nil {
-		c <- err
-	}
-	mutex.Unlock()
-
-	if err = result.Err(); err != nil {
-		c <- err
-	}
-	log.Println("Created GUEST node")
-	c <- nil
 }

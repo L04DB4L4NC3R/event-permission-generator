@@ -1,4 +1,4 @@
-package model
+package events
 
 import (
 	"log"
@@ -7,13 +7,11 @@ import (
 )
 
 var (
-	session neo4j.Session
-	result  neo4j.Result
+	Session neo4j.Session
 )
 
-func SetDB(s neo4j.Session, r neo4j.Result) {
-	session = s
-	result = r
+func SetDB(s neo4j.Session) {
+	Session = s
 }
 
 func handleErr(err error) bool {

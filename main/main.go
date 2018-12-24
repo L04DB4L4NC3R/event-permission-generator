@@ -5,14 +5,14 @@ import (
 	"net/http"
 	"text/template"
 
+	events "../lib"
 	"./controller"
-	"./model"
 	"github.com/neo4j/neo4j-go-driver/neo4j"
 )
 
 func main() {
 	// connect to database
-	session, driver, result, err := connectToDB()
+	session, driver, err := connectToDB()
 	if err != nil {
 		log.Fatalln("Error connecting to Database")
 		log.Fatalln(err)
@@ -23,7 +23,7 @@ func main() {
 	defer session.Close()
 
 	// pass the session to the model layer
-	model.SetDB(session, result)
+	events.SetDB(session)
 
 	// populate templates
 	controller.Startup(populateTempaltes())
@@ -39,13 +39,12 @@ func populateTempaltes() *template.Template {
 	return res
 }
 
-func connectToDB() (neo4j.Session, neo4j.Driver, neo4j.Result, error) {
+func connectToDB() (neo4j.Session, neo4j.Driver, error) {
 
 	// define driver, session and result vars
 	var (
 		driver  neo4j.Driver
 		session neo4j.Session
-		result  neo4j.Result
 		err     error
 	)
 
@@ -58,5 +57,5 @@ func connectToDB() (neo4j.Session, neo4j.Driver, neo4j.Result, error) {
 	if session, err = driver.Session(neo4j.AccessModeWrite); err != nil {
 		return nil, nil, nil, err
 	}
-	return session, driver, result, nil
+	return session, driver, nil
 }
