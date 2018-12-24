@@ -112,6 +112,9 @@ func (l letter) handleLetter(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusNotFound)
 		}
 
+	} else {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
 	}
 }
 

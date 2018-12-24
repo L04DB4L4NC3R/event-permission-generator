@@ -95,6 +95,7 @@ import (
 func createEvent(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
 	}
 	var data events.Event
 	err := json.NewDecoder(r.Body).Decode(&data)
@@ -186,6 +187,7 @@ func createEvent(w http.ResponseWriter, r *http.Request) {
 func readEvent(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
 	}
 	var query model.Query
 	if err := json.NewDecoder(r.Body).Decode(&query); err != nil {
@@ -229,8 +231,9 @@ func readEvent(w http.ResponseWriter, r *http.Request) {
  *
 */
 func deleteEvent(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
+	if r.Method != http.MethodDelete {
 		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
 	}
 	var data model.Query
 	c := make(chan error)

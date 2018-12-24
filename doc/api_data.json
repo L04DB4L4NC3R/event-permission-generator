@@ -198,7 +198,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "./main/controller/eventCRUD.go",
+    "filename": "./src/event/controller/eventCRUD.go",
     "groupTitle": "admin",
     "sampleRequest": [
       {
@@ -207,7 +207,54 @@
     ]
   },
   {
-    "type": "post",
+    "type": "delete",
+    "url": "/event/delete",
+    "title": "delete an event",
+    "name": "delete_an_event",
+    "group": "admin",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "key",
+            "description": "<p>key to query the event by</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "value",
+            "description": "<p>value of the key</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "request-example",
+          "content": "{\n\t\"key\":\"name\",\n\t\"value\":\"DEVFEST\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "response-example",
+          "content": "\n{\"status\":true,\"message\":\"node DELETED successfully\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./src/event/controller/eventCRUD.go",
+    "groupTitle": "admin",
+    "sampleRequest": [
+      {
+        "url": "http://localhost/api/v1/event/delete"
+      }
+    ]
+  },
+  {
+    "type": "get",
     "url": "/event/read",
     "title": "read an event",
     "name": "read_an_event",
@@ -245,7 +292,7 @@
       ]
     },
     "version": "0.0.0",
-    "filename": "./main/controller/eventCRUD.go",
+    "filename": "./src/event/controller/eventCRUD.go",
     "groupTitle": "admin",
     "sampleRequest": [
       {
@@ -419,7 +466,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "./main/controller/generatePermissionLetter.go",
+    "filename": "./src/event/controller/generatePermissionLetter.go",
     "groupTitle": "all",
     "sampleRequest": [
       {
