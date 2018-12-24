@@ -301,6 +301,53 @@ define({ "api": [
     ]
   },
   {
+    "type": "put",
+    "url": "/event/update",
+    "title": "update an event",
+    "name": "update_an_event",
+    "group": "admin",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "key",
+            "description": "<p>key to query the event by</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "value",
+            "description": "<p>value of the key</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "request-example",
+          "content": "{\n\t\"key\":\"name\",\n\t\"value\":\"DEVRELCONF\"\n}",
+          "type": "json"
+        },
+        {
+          "title": "response-example",
+          "content": "\n{\"status\":true,\"message\":\"Updated name to DEVRELCONF\"}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./src/event/controller/eventCRUD.go",
+    "groupTitle": "admin",
+    "sampleRequest": [
+      {
+        "url": "http://localhost/api/v1/event/update"
+      }
+    ]
+  },
+  {
     "type": "post",
     "url": "/permissionLetter",
     "title": "generate permission letter",
