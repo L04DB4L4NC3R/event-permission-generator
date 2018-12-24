@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	events "../../lib"
 	"../model"
 )
 
@@ -95,7 +96,7 @@ func createEvent(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 	}
-	var data model.Event
+	var data events.Event
 	err := json.NewDecoder(r.Body).Decode(&data)
 	if err != nil {
 		log.Println(err)

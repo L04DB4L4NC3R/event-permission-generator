@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"text/template"
 
-	"../model"
+	events "../../lib"
 )
 
 type letter struct {
@@ -100,7 +100,7 @@ func Handle(err error) {
 */
 func (l letter) handleLetter(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
-		var data model.Event
+		var data events.Event
 		err := json.NewDecoder(r.Body).Decode(&data)
 
 		Handle(err)
