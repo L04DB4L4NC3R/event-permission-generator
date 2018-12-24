@@ -3,7 +3,7 @@ package model
 import (
 	"log"
 
-	events "../../lib"
+	events "../../../lib"
 )
 
 type Query struct {
@@ -21,7 +21,7 @@ func ShowEventData(q Query, c chan EventReturn) {
 	MATCH (n:EVENT)-[:StudentCoordinator]->(a)
 	MATCH (n:EVENT)-[:FacultyCoordinator]->(b)
 	MATCH (n:EVENT)-[:GUEST]->(c)
-	WHERE n.name="DEVFEST" 
+	WHERE n.`+q.Key+`=$val 
 	RETURN n.clubName, n.name, n.toDate, n.fromDate, n.toTime, n.fromTime, n.budget, n.description, n.category,
 	n.venue, n.attendance, n.expectedParticipants, n.PROrequest, n.campusEngineerRequest, n.duration, a.name, 
 	a.registrationNumber, a.email, a.phoneNumber, a.gender, b.name, b.registrationNumber, b.email, 

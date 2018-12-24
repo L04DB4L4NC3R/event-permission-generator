@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"text/template"
 
-	events "../../lib"
+	events "../../../lib"
 )
 
 type letter struct {

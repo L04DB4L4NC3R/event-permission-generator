@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	events "../../lib"
+	events "../../../lib"
 	"../model"
 )
 

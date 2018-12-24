@@ -4,7 +4,7 @@ import (
 	"log"
 	"sync"
 
-	events "../../lib"
+	events "../../../lib"
 )
 
 func CreateEvent(e events.Event) error {
