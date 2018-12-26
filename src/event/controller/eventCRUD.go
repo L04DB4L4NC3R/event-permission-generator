@@ -270,11 +270,15 @@ func deleteEvent(w http.ResponseWriter, r *http.Request) {
  *
  * @apiParam {String} key key to query the event by
  * @apiParam {String} value value of the key
+ * @apiParam {String} changeKey key of the value which needs to be altered
+ * @apiParam {String} changeValue the new value
 
 @apiParamExample {json} request-example
 {
 	"key":"name",
-	"value":"DEVRELCONF"
+	"value":"DEVRELCONF",
+	"changeKey":"some key",
+	"changeValue":"some value"
 }
 
  * @apiParamExample {json} response-example

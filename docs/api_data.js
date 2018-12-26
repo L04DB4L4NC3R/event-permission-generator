@@ -1,4 +1,4 @@
-[
+define({ "api": [
   {
     "success": {
       "fields": {
@@ -322,13 +322,27 @@
             "optional": false,
             "field": "value",
             "description": "<p>value of the key</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "changeKey",
+            "description": "<p>key of the value which needs to be altered</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "changeValue",
+            "description": "<p>the new value</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "request-example",
-          "content": "{\n\t\"key\":\"name\",\n\t\"value\":\"DEVRELCONF\"\n}",
+          "content": "{\n\t\"key\":\"name\",\n\t\"value\":\"DEVRELCONF\",\n\t\"changeKey\":\"some key\",\n\t\"changeValue\":\"some value\"\n}",
           "type": "json"
         },
         {
@@ -521,4 +535,4 @@
       }
     ]
   }
-]
+] });

@@ -7,7 +7,7 @@ import (
 
 func main() {
 	log.Println("Starting to listen..")
-	http.Handle("/docs/", http.StripPrefix("/docs/", http.FileServer(http.Dir("./doc"))))
+	http.Handle("/docs/", http.StripPrefix("/docs/", http.FileServer(http.Dir("./docs"))))
 	log.Fatal(http.ListenAndServe(":3000", nil))
 }
 
