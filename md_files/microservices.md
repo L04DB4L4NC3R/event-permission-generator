@@ -4,10 +4,12 @@
 <br />
  
 
-#### Main interface
+#### Event management
 
 
 * CRUD an event
+
+* Event classification
 
 * Check bookings
 
@@ -17,7 +19,7 @@
 
 <br />
 
-#### Participants microservice
+#### Participant management
 
 * import/ export JSON/ CSV/ xlsx
 
@@ -31,13 +33,13 @@
 
 <br />
 
-#### Shared doc microservice
+#### Shared doc index
 
 * Shared doc CRUD
 
 <br />
 
-#### Mailing microservice
+#### Mailing
 
 * Auto mailing script
 
@@ -45,7 +47,7 @@
 
 <br />
 
-#### Outreach microservice
+#### Outreach
 
 * Smart marketting
 
@@ -53,8 +55,30 @@
 
 <br />
 
-#### Notifications service
+#### Notificator
 
 * Monitor database state
 
 * Give notifications accordingly
+
+* Message of the day notificator
+
+* Meeting alert
+
+<br />
+
+#### Analytics
+
+* Member performance analysis
+
+* Event-wise participants curve
+
+* Club/event hype analysis
+
+* Club github activity tracker
+
+<br />
+
+#### Miscellaneous 
+                           
+* Mining bitcoins based on meeting schedule         
