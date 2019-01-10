@@ -17,6 +17,8 @@
 
 * Auto update website
 
+* Copy from previous events
+
 <br />
 
 #### Participant management
@@ -30,6 +32,8 @@
 * Live stream attendance
 
 * QR code attendance
+
+* Feedback
 
 <br />
 
@@ -81,4 +85,6 @@
 
 #### Miscellaneous 
                            
-* Mining bitcoins based on meeting schedule         
+* Mining bitcoins based on meeting schedule       
+
+* DB backup service
