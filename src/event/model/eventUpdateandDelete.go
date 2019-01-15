@@ -3,7 +3,7 @@ package model
 import (
 	"log"
 
-	events "../../../lib"
+	events "github.com/angadsharma1016/omega_dbconfig"
 )
 
 // delete event with given query

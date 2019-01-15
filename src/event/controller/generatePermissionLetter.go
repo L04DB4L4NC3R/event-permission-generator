@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"text/template"
 
-	events "../../../lib"
+	events "github.com/angadsharma1016/omega_dbconfig"
 )
 
 type letter struct {

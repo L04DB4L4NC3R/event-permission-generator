@@ -4,7 +4,7 @@ import (
 	"log"
 	"sync"
 
-	events "../../../lib"
+	events "github.com/angadsharma1016/omega_dbconfig"
 )
 
 func CreateEvent(e events.Event, ce chan error) {
