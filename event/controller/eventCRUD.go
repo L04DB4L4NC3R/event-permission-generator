@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"../model"
+	"github.com/omega/event/model"
 
 	events "github.com/angadsharma1016/omega_dbconfig"
 )
