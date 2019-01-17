@@ -1,0 +1,22 @@
+version: "2"
+services:
+  event:
+    build:
+      context: .
+      dockerfile: event/Dockerfile
+    restart: always
+    volumes:
+    - .:/go/src/angadsharma1016/omega
+    container_name: event
+    ports: 
+    - 3000:3000
+  participants:
+    build:
+      context: .
+      dockerfile: participants/Dockerfile
+    restart: always
+    volumes:
+    - .:/go/src/angadsharma1016/omega
+    container_name: participants
+    ports:
+    - 8800:8081
