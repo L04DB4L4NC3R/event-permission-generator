@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"text/template"
 
+	"github.com/angadsharma1016/omega/event/controller"
 	events "github.com/angadsharma1016/omega_dbconfig"
-	"github.com/omega/event/controller"
 )
 
 func main() {
